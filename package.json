@@ -1,0 +1,24 @@
+{
+  "name": "ReadMeMaker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heath-Bennett/ReadMeMaker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Heath-Bennett/ReadMeMaker/issues"
+  },
+  "homepage": "https://github.com/Heath-Bennett/ReadMeMaker#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "inquirer": "^7.3.3"
+  }
+}
