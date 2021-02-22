@@ -2,161 +2,54 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-let chartColorCode = ``;
-let chartColorTable = ``;
-let chartColorBlock = ``;
+const util = require('util');
 
-const colorChart = (anArray) => {
-    let temp = ``;
-    for (let i = 0; i < anArray.length; i++){
-        chartColorCode += (anArray[i] + `|`);
-        chartColorTable += `:----------:|`;
-        temp = anArray[i].slice(1);
-        chartColorBlock += `![${anArray[i]}](https://via.placeholder.com/150x300/${temp}/000000?text=+)  |`;
-    }
+const getLicense = (type) => {
+    let license = ``;
+    switch(type) {
+        case 'Apache License 2.0':
+            license = `Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at
+            
+            http://www.apache.org/licenses/LICENSE-2.0
+            
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.`
 
-    chartColorCode = chartColorCode.slice(0, -1);
-    chartColorTable = chartColorTable.slice(0, -1);
-    chartColorBlock = chartColorBlock.slice(0, -1);
-}
+            break;
+        case 'GNU General Public License':
+            license = `This program is free software: you can redistribute it and/or modify
+            it under the terms of the GNU General Public License as published by
+            the Free Software Foundation, either version 3 of the License, or
+            (at your option) any later version.
+            
+            This program is distributed in the hope that it will be useful,
+            but WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+            GNU General Public License for more details.
+            
+            You should have received a copy of the GNU General Public License
+            along with this program.  If not, see <http://www.gnu.org/licenses/>.`
 
+            break;
+        case 'MIT License':
+            license = `Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+            
+            The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+            
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.`
 
+            break;
 
-const generateREADME = (answers3) => 
-`# ${answers3.projectTitle}
+    }     
+    return license;
+};
 
-&nbsp;
-
-## Description
-
-&nbsp;
-
-${answers3.Description}
-
-&nbsp;
-
-[Link to GitHub repository](${answers3.linkToGitHub})
-
-&nbsp;
-
-[Link to deployed page](${answers3.linkToDeployed})
-
-&nbsp;
-
-## Table of Contents
-
-&nbsp;
-
-* [Image of Project](#Image-of-Project)
-* [Resources Used](#Resources-Used)
-* [Colors Used](#Colors-Used)
-* [License](#License)
-
-&nbsp;
-
-## Image of Project
-
-&nbsp;
-
-[Table of Contents](#Table-of-Contents)
-
-&nbsp;
-
-## Resources Used
-
-[Table of Contents](#Table-of-Contents)
-
-&nbsp;
-
-## Colors Used
-
-&nbsp;
-
-${chartColorCode}
-${chartColorTable}
-${chartColorBlock}
-
-[Table of Contents](#Table-of-Contents)
-
-&nbsp;
-
-## License
-&nbsp;
-
-
-[Table of Contents](#Table-of-Contents)
-`;
-
-'use strict';
-
-
-
-let outputFuncName = [];
-let outputFuncDesc = [];
-let outputFuncPath = [];
-let outputResourceName = [];
-let outputResourceLink = [];
-let outputMain = [];
-let outputColors = [];
-
-const questionsFunc = [
-    {
-        type: 'input',
-        name: 'FunctionalitySectionName',
-        message: "Please provide a name for the functionality section.",
-    },
-    {
-        type: 'input',
-        name: 'FunctionalitySectionDesc',
-        message: "Please describe the first functionality?",
-    },
-    {
-        type: 'input',
-        name: 'picturePath',
-        message: "Please submit the path to the picture that corresponds to the functionality",
-    },
-    {
-        type: 'confirm',
-        name: 'askAgain',
-        message: 'Want to enter another functionality (just hit enter for YES)?',
-        default: true,
-    },
-];
-
-const questionsColor = [
-    {
-        type: 'input',
-        name: 'color',
-        message: 'Please provide the hex code for the color used.',
-    },
-    {
-        type: 'confirm',
-        name: 'askAgain',
-        message: 'Would you like to enter another color hex code (just hit enter for YES)?',
-        default: true,
-    },
-];
-
-const questionsResource = [
-    {
-        type: 'input', 
-        name: 'resourceName',
-        message: 'Please provide the name of the resource used.',
-    },
-    {
-        type: 'input',
-        name: 'resourceLink',
-        message: 'Please provide a link to the resources page.',
-    },
-    {
-        type: 'confirm',
-        name: 'askAgain',
-        message: 'Would you like to enter another resource (just hit enter for YES)?',
-        default: true,
-    },
-];
-
-var questionsMain = [
+const questions = [
     {
         type: 'input', 
         name: 'projectTitle', 
@@ -169,97 +62,104 @@ var questionsMain = [
     },
     {
         type: 'input', 
-        name: 'linkToGitHub', 
-        message: 'Please provide a link to the repository.',
+        name: 'installation', 
+        message: 'What is the installation process required?',
     },
     {
         type: 'input',
-        name: 'linkToDeployed',
-        message: 'Please provide a link to the deployed page.',
-    },
-    {
-        type: 'input', 
-        name: 'indexHTML', 
-        message: 'What is the path for the image of the website?',
+        name: 'usage',
+        message: 'How do you use it?'
     },
     {
         type: 'list',
         name: 'licenseType',
         message: 'What license would you like to use?',
-        choices: ['Apache License 2.0', 'GNU General Public License', 'GN Library or "Lesser" General Public License (LGPL)', 'MIT License', 'Mozilla Public License 2.0'],
+        choices: ['Apache License 2.0', 'GNU General Public License', 'MIT License'],
     },
+    {
+        type: 'input',
+        name: 'contributors',
+        message: 'Enter names of contributors.  If none, enter a way for someone to contact you to request being a contributor.',
+    },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'Enter ways this project was tested.',
+    },
+    {
+        type: 'input',
+        name: 'question',
+        message: 'Enter contact information where questions should be sent.',
+    },
+
 ];
 
-function askFunc() {
-    inquirer.prompt(questionsFunc).then((answers) => {
-        // output.push(answers.tvShow);
-        outputFuncName.push(answers.FunctionalitySectionName);
-        outputFuncDesc.push(answers.FunctionalitySectionDesc);
-        outputFuncPath.push(answers.picturePath);
-        
-        if (answers.askAgain) {
-            askFunc();
-        }
-        else{
-            askResource();
-        } 
-    });
-}
 
-function askResource (){
-    inquirer.prompt(questionsResource).then((answers2) => {
-        outputResourceName.push(answers2.resourceName);
-        outputResourceLink.push(answers2.resourceLink);
-        if (answers2.askAgain){
-            askResource();
-        }
-        else {
-            askColor();
-        }
-    });
-}
+const generateREADME = (answers) =>
+`# ${answers.projectTitle}
+ 
+&nbsp;
 
+## Description
 
+${answers.Description}
 
-function askColor(){
-    inquirer.prompt(questionsColor).then((answers4) => {
-        outputColors.push(answers4.color);
-        if (answers4.askAgain){
-            askColor();
-        }
-        else{
-            askMain();
-        }
-    });
-}
+&nbsp;
 
-function askMain (){
-    inquirer.prompt(questionsMain).then((answers3) => {
-        outputMain.push(answers3.projectTitle);
-        outputMain.push(answers3.Description);
-        outputMain.push(answers3.linkToGitHub);
-        outputMain.push(answers3.linkToDeployed);
-        outputMain.push(answers3.indexHTML);
-        outputMain.push(answers3.licenseType);
-        
-        console.log('questionFuncName:', outputFuncName.join(', '));
-        console.log("questionFuncDesc:", outputFuncDesc.join(', '));
-        console.log('questionFuncPath: ', outputFuncPath.join(', '));
-        console.log('questionResourceName:', outputResourceName.join(', '));
-        console.log("questionResourceLink:", outputResourceLink.join(', '));
-        console.log('questionMain: ', outputMain.join(', '));
-        console.log('questionColors: ', outputColors.join(', '));
-        
-        colorChart(outputColors);
-        
-        const readMePageContent = generateREADME(answers3);
-        fs.writeFile('README.md', readMePageContent, (err) =>
-            err ? console.log(err) : console.log('Successfully created README.md')
+## Table of Contents
+
+* [Installation](#Installation)
+* [Usage](#Usage)
+* [License](#License)
+* [Contributing](#Contributing)
+* [Tests](#Tests)
+* [Questions](#Questions)
+
+&nbsp;
+
+## Installation
+
+${answers.installation}
+
+&nbsp;
+
+## Usage
+
+${answers.usage}
+
+&nbsp;
+
+## License
+
+${getLicense(answers.licenseType)}
+
+&nbsp;
+
+## Contributing
+
+${answers.contributors}
+
+&nbsp;
+
+## Tests
+
+${answers.test}
+
+&nbsp;
+
+## Questions
+
+${answers.question}
+
+`;
+
+function init (){
+    inquirer.prompt(questions).then((answers) => {
+        const readMePageContent = generateREADME(answers);
+        fs.writeFile('sampleREADME.md', readMePageContent, (err) =>
+            err ? console.log(err) : console.log('Successfully created sampleREADME.md')
         );
     });
 }
 
-
-askFunc();
-
-
+init();

@@ -1,4 +1,4 @@
-# kldjadf
+# fdsjklfdas
 
 &nbsp;
 
@@ -6,15 +6,15 @@
 
 &nbsp;
 
-dsfja
+dskjfsd
 
 &nbsp;
 
-[Link to GitHub repository](dasfj;)
+[Link to GitHub repository](djfp)
 
 &nbsp;
 
-[Link to deployed page](dfjkla)
+[Link to deployed page]([sdfjkdsa)
 
 &nbsp;
 
@@ -22,20 +22,22 @@ dsfja
 
 &nbsp;
 
-* [Image of Project](#Image-of-Project)
+* [Image of Index.html](#Image-of-Index.html)
 * [Resources Used](#Resources-Used)
 * [Colors Used](#Colors-Used)
 * [License](#License)
 
 &nbsp;
 
-## Image of Project
+## Image of Index.html
 
 &nbsp;
 
 [Table of Contents](#Table-of-Contents)
 
 &nbsp;
+
+## adsf;k  dfkjl;da<br/>&nbsp;![Image of adsf;k](dfkjlas)<br/>[Table of Contents](#Table-of-Contents)<br/>&nbsp;
 
 ## Resources Used
 
@@ -47,9 +49,9 @@ dsfja
 
 &nbsp;
 
-#36454F|#00BFFF|#FFFFFF
-:----------:|:----------:|:----------:
-![#36454F](https://via.placeholder.com/150x300/36454F/000000?text=+)  |![#00BFFF](https://via.placeholder.com/150x300/00BFFF/000000?text=+)  |![#FFFFFF](https://via.placeholder.com/150x300/FFFFFF/000000?text=+)  
+dfkjldsa
+:----------:
+![dfkjldsa](https://via.placeholder.com/150x300/fkjldsa/000000?text=+)  
 
 [Table of Contents](#Table-of-Contents)
 
